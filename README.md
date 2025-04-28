@@ -1,2 +1,43 @@
 # suade
 Sua de csdl hcmus 
+-- cau a
+select gt.Ma_Gt ,Gt.ten_gt
+from goi_thau GT
+join sanpham_thau sp on Gt.Masp=sp.MASP
+where Gt.NgayMo='2024-03-01'
+	and sp.gia_dukien <250000000;
+    
+    -- cau b 
+    select Nt.MA_NT ,NT.TEN_NT
+    from NHA_THAU NT
+    join HOSO_thau hs on NT.MA_NT=HS.MA_NT
+    where HS.TRUNG_THAU='yes'
+    group by NT.MA_NT,NT.TEN_NT
+    having count(*) >3; 
+    -- cau c 
+    select NT.MA_NT ,NT.TEN_NT
+    FROM NHA_THAU NT
+    JOIN HOSO_THAU HS ON NT.MA_NT=HS.MA_NT
+    JOIN SANPHAM_THAU SP ON GT.MASP=SP.MASP
+    WHERE HS.TRUNG.THAU='YES'
+		AND SP.GIA_DUKIEN>3000000
+    GROUP BY NT.MA_NT, NT.TEN_NT
+    ORDER BY count(*)  DESC
+    LIMIT 1;
+    -- CAU D 
+    SELECT NT.MA_NT ,NT.TEN_NT
+    FROM NHA_THAU NT 
+    JOIN HOSO_THAU HS ON NT. MA.NT=HS.MA_NT
+    WHERE YEAR (HS.NGAY_HST)=2024
+    GROUP BY NT.MA_NT, NT.TEN_NT
+    HAVING SUM (CASE WHEN HS.TRUNG_THAU ='NO' THEN 1 ELSE 0 END )=0;
+		AND SUM (CASE WHEN HS.GIA_HST >= NT.NANG_LUC THEN 1 ELSE 0 END )=0;
+-- CAU E 
+SELECT NT.MA_NT,NT.TEN_NT,SP.TEN_SP
+FROM NHA_THAU NT
+JOIN HOSO_THAU HS ON NT.MA_NT=HS.MA_NT
+JOIN GOI_THAU GT ON HS.MA_GT=GT.MA_GT
+JOIN SANPHAM_THAU SP ON GT.MASP=SP.MASP
+WHERE NT.NANG_LUC<10000000
+			AND HS.TRUNG_THAU='YES'
+            AND YEAR (GT.NGAYMO)=2021;
